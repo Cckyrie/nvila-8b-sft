@@ -3,3 +3,15 @@ dummy:
     _target_: llava.data.DummyDataset
     num_instances: 10000
     comments: dummy dataset for testing
+SampleVideo:
+    _target_: llava.data.LLaVADataset
+    data_path: /mnt/datasets/viedo-qa-chuxiang/0-1-0/10-2-chuxiang/10-2-chuxiang_annotation.json
+    media_dir: /mnt/datasets/viedo-qa-chuxiang/0-1-0/10-2-chuxiang
+    is_video: true
+
+# DEFAULT_RUN_NAME="NVILA-Lite-8B-finetune-trial" \
+# DEFAULT_GLOBAL_TRAIN_BATCH_SIZE=64 \
+# DEFAULT_GRADIENT_ACCUMULATION_STEPS=2 \
+#     bash scripts/NVILA-Lite/sft.sh \
+#         /lpai/models/efficient-large-model__nvila-8b-video/25-01-06-2112 \
+#         SampleVideo

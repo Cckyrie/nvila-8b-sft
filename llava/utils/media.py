@@ -15,6 +15,8 @@ from llava.media import Image, Video
 from llava.utils import make_list
 from llava.utils.logging import logger
 
+# import imageio
+
 __all__ = ["extract_media"]
 
 
@@ -25,7 +27,95 @@ def _extract_image(image: Union[Image, PIL.Image.Image]) -> PIL.Image.Image:
         else:
             image = PIL.Image.open(image.path)
     return image
+# 使用imageio
+#####################################################################################
+# def _load_video(video_path: str, *, num_frames: int) -> List[PIL.Image.Image]:
+#     # Load video frames from a directory
+#     if os.path.isdir(video_path):
+#         frame_paths = sorted(glob.glob(os.path.join(video_path, "*")))
+#         indices = np.round(np.linspace(0, len(frame_paths) - 1, num_frames)).astype(int)
+#         return [PIL.Image.open(frame_paths[index]) for index in indices]
 
+#     try:
+#         reader = imageio.get_reader(video_path, format='ffmpeg')
+#         meta = reader.get_meta_data()
+#         total_frames = meta['nframes']
+#         indices = np.round(np.linspace(0, total_frames - 1, num_frames)).astype(int)
+
+#         frames = []
+#         for i, frame in enumerate(reader):
+#             if i in indices:
+#                 frames.append(PIL.Image.fromarray(frame))
+#             if len(frames) >= num_frames:
+#                 break
+#         reader.close()
+
+#         if not frames:
+#             raise ValueError(f"Video '{video_path}' has no frames.")
+#         return frames
+#     except Exception as e:
+#         raise ValueError(f"Failed to load video '{video_path}': {e}")
+
+# def _extract_video(video: Video, config: PretrainedConfig) -> List[PIL.Image.Image]:
+#     num_frames = config.num_video_frames
+#     if getattr(config, "fps", 0) != 0:
+#         logger.warning("Extracting frames from video with specified FPS is not supported yet. Ignored.")
+#     return _load_video(video.path, num_frames=num_frames)
+###############################################################################################
+
+
+######################################################################################
+# 使用cv2.VideoCapture
+# def _load_video(video_path: str, *, num_frames: int) -> List[PIL.Image.Image]:
+#     # Load video frames from a directory
+#     if os.path.isdir(video_path):
+#         frame_paths = sorted(glob.glob(os.path.join(video_path, "*")))
+#         indices = np.round(np.linspace(0, len(frame_paths) - 1, num_frames)).astype(int)
+#         return [PIL.Image.open(frame_paths[index]) for index in indices]
+
+#     # Load video frames from a video file
+#     vidcap = cv2.VideoCapture(video_path)
+
+#     # Find the last frame as frame count might not be accurate
+#     frame_count = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
+#     while frame_count > 0:
+#         vidcap.set(cv2.CAP_PROP_POS_FRAMES, frame_count - 1)
+#         if vidcap.grab():
+#             break
+#         frame_count -= 1
+#     else:
+#         raise ValueError(f"Video '{video_path}' has no frames.")
+
+#     # Extract frames uniformly
+#     indices = np.round(np.linspace(0, frame_count - 1, num_frames)).astype(int)
+#     frames = {}
+#     for index in indices:
+#         if index in frames:
+#             continue
+#         vidcap.set(cv2.CAP_PROP_POS_FRAMES, index)
+#         success, frame = vidcap.read()
+#         if not success:
+#             logger.warning(f"Failed to read frame {index} from video '{video_path}'. Skipped.")
+#             continue
+#         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+#         frames[index] = PIL.Image.fromarray(frame)
+#     return [frames[index] for index in indices if index in frames]
+
+
+# def _extract_video(video: Video, config: PretrainedConfig) -> List[PIL.Image.Image]:
+#     num_frames = config.num_video_frames
+#     if getattr(config, "fps") != 0:
+#         logger.warning("Extracting frames from video with specified FPS is not supported yet. Ignored.")
+
+#     frames = _load_video(video.path, num_frames=num_frames)
+#     return frames
+##########################################################################
+
+#########################################################################
+from decord import VideoReader, cpu
+import decord
+
+decord.bridge.set_bridge("native")  # Use numpy backend
 
 def _load_video(video_path: str, *, num_frames: int) -> List[PIL.Image.Image]:
     # Load video frames from a directory
@@ -34,33 +124,21 @@ def _load_video(video_path: str, *, num_frames: int) -> List[PIL.Image.Image]:
         indices = np.round(np.linspace(0, len(frame_paths) - 1, num_frames)).astype(int)
         return [PIL.Image.open(frame_paths[index]) for index in indices]
 
-    # Load video frames from a video file
-    vidcap = cv2.VideoCapture(video_path)
+    # Load video frames from video file using decord
+    try:
+        vr = VideoReader(video_path, ctx=cpu(0))
+        total_frames = len(vr)
+        if total_frames == 0:
+            raise ValueError(f"Video '{video_path}' has no frames.")
 
-    # Find the last frame as frame count might not be accurate
-    frame_count = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
-    while frame_count > 0:
-        vidcap.set(cv2.CAP_PROP_POS_FRAMES, frame_count - 1)
-        if vidcap.grab():
-            break
-        frame_count -= 1
-    else:
-        raise ValueError(f"Video '{video_path}' has no frames.")
+        indices = np.round(np.linspace(0, total_frames - 1, num_frames)).astype(int)
+        batch = vr.get_batch(indices).asnumpy()  # shape: (N, H, W, 3)
 
-    # Extract frames uniformly
-    indices = np.round(np.linspace(0, frame_count - 1, num_frames)).astype(int)
-    frames = {}
-    for index in indices:
-        if index in frames:
-            continue
-        vidcap.set(cv2.CAP_PROP_POS_FRAMES, index)
-        success, frame = vidcap.read()
-        if not success:
-            logger.warning(f"Failed to read frame {index} from video '{video_path}'. Skipped.")
-            continue
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        frames[index] = PIL.Image.fromarray(frame)
-    return [frames[index] for index in indices if index in frames]
+        frames = [PIL.Image.fromarray(frame) for frame in batch]
+        return frames
+
+    except Exception as e:
+        raise ValueError(f"Failed to load video '{video_path}' using decord: {e}")
 
 
 def _extract_video(video: Video, config: PretrainedConfig) -> List[PIL.Image.Image]:
@@ -68,9 +146,8 @@ def _extract_video(video: Video, config: PretrainedConfig) -> List[PIL.Image.Ima
     if getattr(config, "fps") != 0:
         logger.warning("Extracting frames from video with specified FPS is not supported yet. Ignored.")
 
-    frames = _load_video(video.path, num_frames=num_frames)
-    return frames
-
+    return _load_video(video.path, num_frames=num_frames)
+###################################################################
 
 def extract_media(
     messages: List[Dict[str, Any]],

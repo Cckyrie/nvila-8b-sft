@@ -1,8 +1,12 @@
 #!/bin/bash
 
-DEFAULT_RUN_NAME="vila-qwen2-vl-7b-sft"
-DEFAULT_GLOBAL_TRAIN_BATCH_SIZE=2048
-DEFAULT_GRADIENT_ACCUMULATION_STEPS=2
+# DEFAULT_RUN_NAME="vila-qwen2-vl-7b-sft"
+# DEFAULT_GLOBAL_TRAIN_BATCH_SIZE=2048
+# DEFAULT_GRADIENT_ACCUMULATION_STEPS=2
+
+RUN_NAME=${DEFAULT_RUN_NAME:-"vila-qwen2-vl-7b-sft"}
+GLOBAL_TRAIN_BATCH_SIZE=${DEFAULT_GLOBAL_TRAIN_BATCH_SIZE:-2048}
+GRADIENT_ACCUMULATION_STEPS=${DEFAULT_GRADIENT_ACCUMULATION_STEPS:-1}
 
 STAGE_PATH=${1:-"runs/train/nvila-8b-pretrain/model"}
 DATA_MIXTURE=${2:-"nvila-pretrain"}
@@ -11,6 +15,10 @@ OUTPUT_DIR=${3:-"runs/train/nvila-8b-sft"}
 source scripts/setups/train.sh
 
 STAGE2_PATH=$1
+
+export TOKENIZERS_PARALLELISM=false
+# 禁用 wandb 交互式模式
+export WANDB_MODE=disabled
 
 torchrun \
     --nnodes=$NNODES --nproc_per_node=$GPUS_PER_NODE --node_rank=$NODE_RANK \
@@ -46,5 +54,4 @@ torchrun \
         --model_max_length 4096 \
         --gradient_checkpointing True \
         --dataloader_num_workers 16 \
-        --vflan_no_system_prompt True \
-        --report_to wandb
+        --vflan_no_system_prompt True
