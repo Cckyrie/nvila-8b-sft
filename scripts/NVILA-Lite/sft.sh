@@ -10,7 +10,7 @@ GRADIENT_ACCUMULATION_STEPS=${DEFAULT_GRADIENT_ACCUMULATION_STEPS:-1}
 
 STAGE_PATH=${1:-"runs/train/nvila-8b-pretrain/model"}
 DATA_MIXTURE=${2:-"nvila-pretrain"}
-OUTPUT_DIR=${3:-"runs/train/nvila-8b-sft"}
+OUTPUT_DIR=${3:-"/lpai/output/models"}
 
 source scripts/setups/train.sh
 
