@@ -5,68 +5,68 @@ dummy:
     comments: dummy dataset for testing
 SampleVideo1:
     _target_: llava.data.LLaVADataset
-    data_path: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/10-2-chuxiang/10-2-chuxiang_annotation.json
-    media_dir: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/10-2-chuxiang
+    data_path: /mnt/datasets/viedo-qa-chuxiang/0-1-0/10-2-chuxiang/10-2-chuxiang_annotation.json
+    media_dir: /mnt/datasets/viedo-qa-chuxiang/0-1-0/10-2-chuxiang
     is_video: true
 
 SampleVideo2:
     _target_: llava.data.LLaVADataset
-    data_path: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/4-3-chuxiang/4-3-chuxiang_annotation.json
-    media_dir: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/4-3-chuxiang
+    data_path: /mnt/datasets/viedo-qa-chuxiang/0-1-0/4-3-chuxiang/4-3-chuxiang_annotation.json
+    media_dir: /mnt/datasets/viedo-qa-chuxiang/0-1-0/4-3-chuxiang
     is_video: true
 
 SampleVideo3:
     _target_: llava.data.LLaVADataset
-    data_path: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/4.23-1/4.23-1_annotation.json
-    media_dir: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/4.23-1
+    data_path: /mnt/datasets/viedo-qa-chuxiang/0-1-0/4.23-1/4.23-1_annotation.json
+    media_dir: /mnt/datasets/viedo-qa-chuxiang/0-1-0/4.23-1
     is_video: true
 
 SampleVideo4:
     _target_: llava.data.LLaVADataset
-    data_path: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/4.23-3/4.23-3_annotation.json
-    media_dir: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/4.23-3
+    data_path: /mnt/datasets/viedo-qa-chuxiang/0-1-0/4.23-3/4.23-3_annotation.json
+    media_dir: /mnt/datasets/viedo-qa-chuxiang/0-1-0/4.23-3
     is_video: true
 
 SampleVideo5:
     _target_: llava.data.LLaVADataset
-    data_path: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/4.23-4/4.23-4_annotation.json
-    media_dir: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/4.23-4
+    data_path: /mnt/datasets/viedo-qa-chuxiang/0-1-0/4.23-4/4.23-4_annotation.json
+    media_dir: /mnt/datasets/viedo-qa-chuxiang/0-1-0/4.23-4
     is_video: true
 
 SampleVideo6:
     _target_: llava.data.LLaVADataset
-    data_path: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/4.24-2/4.24-2_annotation.json
-    media_dir: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/4.24-2
+    data_path: /mnt/datasets/viedo-qa-chuxiang/0-1-0/4.24-2/4.24-2_annotation.json
+    media_dir: /mnt/datasets/viedo-qa-chuxiang/0-1-0/4.24-2
     is_video: true
 
 SampleVideo7:
     _target_: llava.data.LLaVADataset
-    data_path: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/5-2-chuxiang/5-2-chuxiang_annotation.json
-    media_dir: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/5-2-chuxiang
+    data_path: /mnt/datasets/viedo-qa-chuxiang/0-1-0/5-2-chuxiang/5-2-chuxiang_annotation.json
+    media_dir: /mnt/datasets/viedo-qa-chuxiang/0-1-0/5-2-chuxiang
     is_video: true
 
 SampleVideo8:
     _target_: llava.data.LLaVADataset
-    data_path: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/5-3-chuxiang/5-3-chuxiang_annotation.json
-    media_dir: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/5-3-chuxiang
+    data_path: /mnt/datasets/viedo-qa-chuxiang/0-1-0/5-3-chuxiang/5-3-chuxiang_annotation.json
+    media_dir: /mnt/datasets/viedo-qa-chuxiang/0-1-0/5-3-chuxiang
     is_video: true
 
 SampleVideo9:
     _target_: llava.data.LLaVADataset
-    data_path: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/6-1-chuxiang/6-1-chuxiang_annotation.json
-    media_dir: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/6-1-chuxiang
+    data_path: /mnt/datasets/viedo-qa-chuxiang/0-1-0/6-1-chuxiang/6-1-chuxiang_annotation.json
+    media_dir: /mnt/datasets/viedo-qa-chuxiang/0-1-0/6-1-chuxiang
     is_video: true
 
 SampleVideo10:
     _target_: llava.data.LLaVADataset
-    data_path: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/6-2-chuxiang/6-2-chuxiang_annotation.json
-    media_dir: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/6-2-chuxiang
+    data_path: /mnt/datasets/viedo-qa-chuxiang/0-1-0/6-2-chuxiang/6-2-chuxiang_annotation.json
+    media_dir: /mnt/datasets/viedo-qa-chuxiang/0-1-0/6-2-chuxiang
     is_video: true
 
 SampleVideo11:
     _target_: llava.data.LLaVADataset
-    data_path: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/7-3-chuxiang/7-3-chuxiang_annotation.json
-    media_dir: /mnt/datasets/viedo-qa-chuxiang/25-05-12-1/7-3-chuxiang
+    data_path: /mnt/datasets/viedo-qa-chuxiang/0-1-0/7-3-chuxiang/7-3-chuxiang_annotation.json
+    media_dir: /mnt/datasets/viedo-qa-chuxiang/0-1-0/7-3-chuxiang
     is_video: true
 
 
