@@ -51,8 +51,8 @@ torchrun \
         --warmup_ratio 0.03 \
         --lr_scheduler_type cosine \
         --logging_steps 1 \
-        --model_max_length 16384 \  # 从 4096 改为 16384
+        --model_max_length 8192 \  # 从 4096 改为 8192
         --gradient_checkpointing True \
         --dataloader_num_workers 16 \
         --vflan_no_system_prompt True \
-        --num_video_frames 32       # 新增：抽取 32 帧
+        --num_video_frames 16       # 新增：抽取 16 帧
