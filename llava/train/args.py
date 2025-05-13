@@ -35,7 +35,7 @@ class DataArguments:
     downsample_video: bool = False
 
     # for video training
-    num_video_frames: int = 8
+    num_video_frames: int = 32
     fps: float = 0.0  # 0.0 means we do not use fps at all. Always sample the same number of frames.
 
 
