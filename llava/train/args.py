@@ -28,14 +28,14 @@ class DataArguments:
     image_folder: Optional[str] = field(default=None)
     image_aspect_ratio: Optional[str] = "resize"
     min_tiles: Optional[int] = 1
-    max_tiles: Optional[int] = 12
+    max_tiles: Optional[int] = 6
     data_mixture: str = "llava_1_5_mm_align"
     eval_data_mixture: str = None
     vflan_no_system_prompt: bool = False
     downsample_video: bool = False
 
     # for video training
-    num_video_frames: int = 32
+    num_video_frames: int = 16
     fps: float = 0.0  # 0.0 means we do not use fps at all. Always sample the same number of frames.
 
 
