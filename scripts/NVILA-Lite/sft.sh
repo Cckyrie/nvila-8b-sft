@@ -39,7 +39,7 @@ torchrun \
         --image_aspect_ratio dynamic \
         --bf16 True \
         --output_dir $OUTPUT_DIR/model \
-        --num_train_epochs 50 \
+        --num_train_epochs 10 \
         --per_device_train_batch_size $PER_DEVICE_TRAIN_BATCH_SIZE \
         --gradient_accumulation_steps $GRADIENT_ACCUMULATION_STEPS \
         --evaluation_strategy no \
