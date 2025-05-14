@@ -46,13 +46,13 @@ torchrun \
         --save_strategy steps \
         --save_steps 100 \
         --save_total_limit 1 \
-        --learning_rate 1e-6 \
+        --learning_rate 1e-7 \
         --weight_decay 0. \
         --warmup_ratio 0.03 \
         --lr_scheduler_type cosine \
         --logging_steps 1 \
-        --model_max_length 8192 \
+        --model_max_length 16384 \
         --gradient_checkpointing True \
         --dataloader_num_workers 16 \
         --vflan_no_system_prompt True \
-        --num_video_frames 16
+        --num_video_frames 32
