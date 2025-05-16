@@ -39,14 +39,14 @@ torchrun \
         --image_aspect_ratio dynamic \
         --bf16 True \
         --output_dir $OUTPUT_DIR/model \
-        --num_train_epochs 10 \
+        --num_train_epochs 5 \
         --per_device_train_batch_size $PER_DEVICE_TRAIN_BATCH_SIZE \
         --gradient_accumulation_steps $GRADIENT_ACCUMULATION_STEPS \
         --evaluation_strategy no \
         --save_strategy steps \
         --save_steps 100 \
         --save_total_limit 1 \
-        --learning_rate 1e-6 \
+        --learning_rate 2e-6 \
         --weight_decay 0. \
         --warmup_ratio 0.03 \
         --lr_scheduler_type cosine \
